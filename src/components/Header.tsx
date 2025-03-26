@@ -1,15 +1,18 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, Dispatch } from "react";
 import { CartItem, SpanishBeer } from "../types";
+import type { CartActions } from "../reducers/cart-reducer";
 
 type HeaderProps = {
   cart: CartItem[],
+  dispatch: Dispatch <CartActions>,
   clearCart: () => void,
-  increaseQuantity: (id: SpanishBeer['id']) => void,
   decreaseQuantity: (id: SpanishBeer['id']) => void,
-  removeFromCart: (id: SpanishBeer['id']) => void,
 }
 
-export default function Header({ cart, clearCart, increaseQuantity, decreaseQuantity, removeFromCart }: HeaderProps) {
+export default function Header({ cart, dispatch, clearCart, decreaseQuantity }: HeaderProps) {
+  
+  const isEmpty = useMemo( () => cart.length === 0, [cart])
+  
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const toggleCart = () => {
@@ -33,7 +36,7 @@ export default function Header({ cart, clearCart, increaseQuantity, decreaseQuan
       </div>
       {isCartOpen && (
         <div className="w-80 sm:w-96 absolute text-gray-600 top-40 sm:top-40 right-5 sm:right-10 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-3 sm:p-4">
-          {cart.length === 0 ? (
+          {isEmpty ? (
             <p className="text-center text-base">Your cart is empty <i className="fa-solid fa-face-sad-cry"></i></p>
           ) : (
             <>
@@ -59,10 +62,10 @@ export default function Header({ cart, clearCart, increaseQuantity, decreaseQuan
                       <td className="flex justify-center pt-5">
                         <button className="text-xs text-white" onClick={() => decreaseQuantity(beer.id)}><i className="fa-solid fa-minus bg-gray-800 p-1"></i></button>
                         <span className="font-normal text-base px-2"> {beer.quantity} </span>
-                        <button className="text-xs text-white" onClick={() => increaseQuantity(beer.id)}><i className="fa-solid fa-plus bg-gray-800 p-1"></i></button>
+                        <button className="text-xs text-white" onClick={() => dispatch ({type: 'increase-quantity', payload: {id: beer.id}})}><i className="fa-solid fa-plus bg-gray-800 p-1"></i></button>
                       </td>
                       <td className="ps-4 pt-3 sm:pt-1">
-                        <button className="text-center text-base text-white pb-5 self-center" onClick={() => removeFromCart(beer.id)}><i className="fa-solid fa-trash bg-red-700 rounded-full border-gray-200 p-2"></i></button>
+                        <button className="text-center text-base text-white pb-5 self-center" onClick={() => dispatch({type: 'remove-From-Cart', payload: {id: beer.id}})}><i className="fa-solid fa-trash bg-red-700 rounded-full border-gray-200 p-2"></i></button>
                       </td>
                     </tr>
                   ))}

@@ -1,11 +1,14 @@
-import { SpanishBeer } from "../types";
+import { SpanishBeer } from "../types"
+import type { CartActions } from "../reducers/cart-reducer";
+import type { Dispatch } from "react";
 
 type BeersProp = {
     data: SpanishBeer[];
-    addCart:(product:SpanishBeer)=>void
+    // addCart:(product:SpanishBeer)=>void
+    dispatch: React.Dispatch<CartActions>
 }
 
-export default function Beers({data, addCart}: BeersProp)  {
+export default function Beers({data, dispatch}: BeersProp)  {
   return (
     <div className="py-8 font-sans">
       <h1 className="text-center text-yellow-600 text-3xl md:text-5xl font-bold">Our Selection of Beers</h1>
@@ -19,7 +22,7 @@ export default function Beers({data, addCart}: BeersProp)  {
                 <p className="text-sm sm:text-base mb-2 justify-center text-justify sm:text-start">{beer.description}</p>
                 <h3 className="text-xl text-yellow-600 font-bold mb-2">{beer.price}€</h3>
               </div>
-              <button className="w-max mt-2 px-4 py-2 bg-red-700 text-white rounded" onClick={()=>addCart(beer)}>Add to cart</button>
+              <button className="w-max mt-2 px-4 py-2 bg-red-700 text-white rounded" onClick={() => dispatch({ type: 'add-to-cart', payload: { item: beer } })}>Add to cart</button>
             </div>
           </div>
         ))}

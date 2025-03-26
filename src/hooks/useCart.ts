@@ -19,31 +19,6 @@ export const useCart = () => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]) 
 
-  const addCart = (product:SpanishBeer) => {
-    const productExist = cart.findIndex(item => item.id === product.id)
-    if (productExist>=0){
-        if (cart[productExist].quantity >= 5) return 
-        const updatedCart = [...cart]
-        updatedCart[productExist].quantity++     
-        setCart(updatedCart)
-    }else {
-        const newProduct : CartItem = {...product, quantity: 1}
-        setCart([...cart, newProduct])
-    }
-}
-
-const increaseQuantity = (id: SpanishBeer ['id']) =>{
-  const updateCart = cart.map((item)=>{
-    if (item.id === id && item.quantity < 5){
-    return{
-        ...item,
-        quantity: item.quantity+1
-    }
-    }
-    return item
-})
-setCart(updateCart)
-}
 
 const decreaseQuantity = (id: SpanishBeer['id']) =>{
   const updateCart = cart.map((item)=>{
@@ -62,16 +37,10 @@ const clearCart = () =>{
   setCart([])
 }
 
-const removeFromCart = (id: SpanishBeer ['id']) => {
-  setCart(prevCart => prevCart.filter(beer => beer.id !== id))
-  }
 
 return {
   cart,
-  addCart,
-  increaseQuantity,
   decreaseQuantity,
   clearCart,
-  removeFromCart
 }
 }
