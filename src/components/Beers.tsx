@@ -5,7 +5,7 @@ import type { Dispatch } from "react";
 type BeersProp = {
     data: SpanishBeer[];
     // addCart:(product:SpanishBeer)=>void
-    dispatch: React.Dispatch<CartActions>
+    dispatch: Dispatch<CartActions>
 }
 
 export default function Beers({data, dispatch}: BeersProp)  {
