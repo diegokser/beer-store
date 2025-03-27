@@ -32,3 +32,6 @@ export default {
 Para iniciar puerto en codespace: npm run dev -- --port 3000
 
 Para iniciar en local: npm run dev
+
+
+REACT + TS + useReducer

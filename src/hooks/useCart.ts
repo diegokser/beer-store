@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { CartItem, SpanishBeer } from "../types"
+import { CartItem } from "../types"
 
 
 export const useCart = () => {
@@ -20,19 +20,6 @@ export const useCart = () => {
   }, [cart]) 
 
 
-const decreaseQuantity = (id: SpanishBeer['id']) =>{
-  const updateCart = cart.map((item)=>{
-    if (item.id === id && item.quantity > 0){
-      return {
-        ...item,
-        quantity: item.quantity-1
-      }
-    }
-    return item
-  }).filter((item)=> item.quantity > 0)
-  setCart(updateCart)
-}
-
 const clearCart = () =>{
   setCart([])
 }
@@ -40,7 +27,6 @@ const clearCart = () =>{
 
 return {
   cart,
-  decreaseQuantity,
   clearCart,
 }
 }

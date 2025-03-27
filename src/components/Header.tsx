@@ -1,15 +1,13 @@
 import { useMemo, useState, Dispatch } from "react";
-import { CartItem, SpanishBeer } from "../types";
+import { CartItem } from "../types";
 import type { CartActions } from "../reducers/cart-reducer";
 
 type HeaderProps = {
   cart: CartItem[],
   dispatch: Dispatch <CartActions>,
-  clearCart: () => void,
-  decreaseQuantity: (id: SpanishBeer['id']) => void,
 }
 
-export default function Header({ cart, dispatch, clearCart, decreaseQuantity }: HeaderProps) {
+export default function Header({ cart, dispatch}: HeaderProps) {
   
   const isEmpty = useMemo( () => cart.length === 0, [cart])
   
@@ -60,7 +58,7 @@ export default function Header({ cart, dispatch, clearCart, decreaseQuantity }: 
                       <td className="font-normal text-sm sm:text-base text-center align-middle">{beer.name}</td>
                       <td className="font-normal text-sm sm:text-base text-center align-middle">{beer.price}</td>
                       <td className="flex justify-center pt-5">
-                        <button className="text-xs text-white" onClick={() => decreaseQuantity(beer.id)}><i className="fa-solid fa-minus bg-gray-800 p-1"></i></button>
+                        <button className="text-xs text-white" onClick={() => dispatch ({type: 'decrease-quantity', payload:{id: beer.id}})}><i className="fa-solid fa-minus bg-gray-800 p-1"></i></button>
                         <span className="font-normal text-base px-2"> {beer.quantity} </span>
                         <button className="text-xs text-white" onClick={() => dispatch ({type: 'increase-quantity', payload: {id: beer.id}})}><i className="fa-solid fa-plus bg-gray-800 p-1"></i></button>
                       </td>
@@ -72,7 +70,7 @@ export default function Header({ cart, dispatch, clearCart, decreaseQuantity }: 
                 </tbody>
               </table>
               <div className="flex p-2 justify-between pt-4">
-                <button className="text-white text-base font-medium bg-gray-800 p-2 rounded" onClick={clearCart}>Clear Cart</button>
+                <button className="text-white text-base font-medium bg-gray-800 p-2 rounded" onClick={()=> dispatch({type: 'clear-cart'})}>Clear Cart</button>
                 <p className="text-base text-center self-center">Total: {sumTotal} €</p>
               </div>
             </>

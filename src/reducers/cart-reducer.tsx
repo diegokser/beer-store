@@ -14,9 +14,16 @@ export type CartState = {
     cart: CartItem[]
 }
 
+  // ahora ponemos esto para que en el useState de cart no se inicie como [] vacío, ya que esto hara que nuestro localStorage este vacío. Por lo que comprobamos primero si hay algo en el localStorage y si no lo hay ponemos el arreglo vacío.
+  const inicialLocalStorage = () : CartItem[]=> {
+    const localStorageCart = localStorage.getItem('cart')
+    // .parse es lo opuesto a stringify, convierte un string en objeto 
+    return localStorageCart ? JSON.parse(localStorageCart) : [] 
+  }
+
 export const initialState : CartState = {
     data: db,
-    cart: []
+    cart: inicialLocalStorage()
 }
 
 const MIN_ITEMS = 1
@@ -56,13 +63,23 @@ export const cartReducer = ( // esto es para el autocompletado
         }
     }
     if (action.type === 'decrease-quantity'){
+        const cart = state.cart.map((item)=>{
+            if (item.id === action.payload.id && item.quantity >= MIN_ITEMS){
+              return {
+                ...item,
+                quantity: item.quantity-1
+              }
+            }
+            return item
+          }).filter((item)=> item.quantity >= MIN_ITEMS)
         return{
-            ...state
+            ...state,
+            cart
         }
     }
     if (action.type === 'increase-quantity'){
         const cart = state.cart.map(item => {
-            if (item.id === action.payload.id && item.quantity < 5){
+            if (item.id === action.payload.id && item.quantity < MAX_ITEMS){
             return{
                 ...item,
                 quantity: item.quantity+1
@@ -77,7 +94,8 @@ export const cartReducer = ( // esto es para el autocompletado
     }
     if (action.type === 'clear-cart'){
         return{
-            ...state
+            ...state,
+            cart: []
         }
     }
     return state
