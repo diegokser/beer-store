@@ -23,7 +23,7 @@ export default function Header({ cart, dispatch}: HeaderProps) {
   }, [cart]);
 
   return (
-    <header className="relative bg-[url('../../public/banner-beer.webp')] bg-no-repeat bg-center bg-cover text-yellow-600 font-bold font-sans text-2xl sm:text-4xl py-12 px-8 sm:px-10 flex justify-between items-center">
+    <header className="relative  bg-[url('/banner-beer.webp')] bg-no-repeat bg-center bg-cover text-yellow-600 font-bold font-sans text-2xl sm:text-4xl py-12 px-8 sm:px-10 flex justify-between items-center">
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="mt-14 z-10 relative flex justify-between items-center w-full">
         Spanish Beer Store
@@ -53,7 +53,7 @@ export default function Header({ cart, dispatch}: HeaderProps) {
                   {cart.map((beer) => (
                     <tr key={beer.id} className="overflow-y-auto max-h-60 pt-2 align-middle">
                       <td>
-                        <img className="w-20 items-center p-0" src={`../../public/${beer.image}.jpg`} alt="Beer image" />
+                        <img className="w-20 items-center p-0" src={`/${beer.image}.jpg`} alt="Beer image" />
                       </td>
                       <td className="font-normal text-sm sm:text-base text-center align-middle">{beer.name}</td>
                       <td className="font-normal text-sm sm:text-base text-center align-middle">{beer.price}</td>

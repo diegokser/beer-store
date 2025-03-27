@@ -15,7 +15,7 @@ export default function Beers({data, dispatch}: BeersProp)  {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center py-4 px-8 md:py-12 md:px-20">
         {data.map((beer) => (
           <div key={beer.id} className="py-3 sm:px-3 grid grid-cols-2">
-            <img className="w-30 h-60 md:w-50 md:h-80 mb-4 object-cover" src={`../../public/${beer.image}.jpg`} alt="Cerveza" />
+            <img className="w-30 h-60 md:w-50 md:h-80 mb-4 object-cover" src={`/${beer.image}.jpg`} alt="Cerveza" />
             <div className="flex flex-col justify-between h-full">
               <div>
                 <h2 className="text-base sm:text-lg font-semibold mb-2">{beer.name}</h2>
